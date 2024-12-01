@@ -1,13 +1,11 @@
+// pages/clock.tsx
 "use client"
 import React, { useRef, useEffect } from "react";
-import ClockFace from "./clock/_components/ClockFace";
-import { AstronomyProvider } from "../context/AstronomyContext";
-import MoonCard from "./cards/_components/MoonCard";
-import SunCard from "./cards/_components/SunCard";
+import ClockFace from "./_components/ClockFace";
+import { AstronomyProvider } from "../../context/AstronomyContext";
 import * as THREE from "three";
-import "./cards/styles.css"; // Importieren Sie die CSS-Datei
 
-export default function Home() {
+export default function ClockPage() {
   const containerRef = useRef<HTMLDivElement>(null); // Ref für den Hintergrund-Container
 
   useEffect(() => {
@@ -121,11 +119,8 @@ export default function Home() {
             justifyContent: "center",
             alignItems: "center", // Zentriert den Inhalt
           }}
-          className="container"
         >
-          <MoonCard />
           <ClockFace />
-          <SunCard />
         </div>
       </AstronomyProvider>
     </main>

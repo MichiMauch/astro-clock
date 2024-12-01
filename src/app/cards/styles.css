@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.moon-card,
+.sun-card {
+  position: static;
+  transform: none;
+  width: 80%;
+  height: auto;
+  margin: 10px 0;
+}
+
+@media (min-width: 768px) {
+  .moon-card {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20%;
+    height: 50%;
+  }
+
+  .sun-card {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20%;
+    height: 50%;
+  }
+}
