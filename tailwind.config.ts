@@ -12,6 +12,18 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      animation: {
+        gradient: "gradient 120s ease infinite",
+      },
+      keyframes: {
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 0%' }, 
+      '50%': { backgroundPosition: '100% 100%' },
+        },
+      },
+      backgroundSize: {
+        "200%": "200%",
+      },
     },
   },
   plugins: [],
