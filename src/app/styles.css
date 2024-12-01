@@ -16,11 +16,13 @@
   .container {
     flex-direction: row;
   }
+
   .moon-card {
     width: 20%;
     height: 50%;
     margin: 10px;
   }
+
   .sun-card {
     width: 20%;
     height: 50%;
