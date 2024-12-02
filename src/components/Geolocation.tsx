@@ -17,6 +17,7 @@ const Geolocation: React.FC<GeolocationProps> = ({ onCoordinatesLoaded }) => {
   useEffect(() => {
     if (!navigator.geolocation) {
       setError("Geolocation wird von diesem Browser nicht unterstützt.");
+      onCoordinatesLoaded({ latitude: 47.3769, longitude: 8.5417 }); // Standardkoordinaten verwenden
       return;
     }
 
@@ -30,6 +31,7 @@ const Geolocation: React.FC<GeolocationProps> = ({ onCoordinatesLoaded }) => {
       },
       () => {
         setError("Geolocation wurde abgelehnt. Bitte Standortzugriff aktivieren.");
+        onCoordinatesLoaded({ latitude: 47.3769, longitude: 8.5417 }); // Standardkoordinaten verwenden
       }
     );
   }, [onCoordinatesLoaded]);

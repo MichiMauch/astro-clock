@@ -1,4 +1,4 @@
-export async function getCombinedAstronomyData(latitude?: number, longitude?: number) {
+export async function getCombinedAstronomyData(latitude: number = 47.3769, longitude: number = 8.5417) {
   // NASA-API-Logik
   async function fetchNasaData() {
     const currentDate = new Date();
@@ -207,21 +207,14 @@ async function fetchAstronomyMoonData(latitude: number, longitude: number, date:
     const [nasaData, ipGeoData, nominatimData, astronomyMoonData] = await Promise.all([
       fetchNasaData(),
       fetchIpGeolocationData(),
-      latitude !== undefined && longitude !== undefined ? fetchNominatimData(latitude, longitude) : null,
-      latitude !== undefined && longitude !== undefined
-        ? fetchAstronomyMoonData(latitude, longitude, new Date().toISOString().split("T")[0])
-        : null,
+      fetchNominatimData(latitude, longitude),
+      fetchAstronomyMoonData(latitude, longitude, new Date().toISOString().split("T")[0]),
     ]);
-  
-    if (
-      !nasaData ||
-      !ipGeoData ||
-      (latitude !== undefined && longitude !== undefined && !nominatimData) ||
-      (latitude !== undefined && longitude !== undefined && !astronomyMoonData)
-    ) {
+
+    if (!nasaData || !ipGeoData || !nominatimData || !astronomyMoonData) {
       throw new Error("Daten konnten nicht kombiniert werden.");
     }
-  
+
     return { ...nasaData, ...ipGeoData, ...nominatimData, ...astronomyMoonData };
   } catch (error) {
     console.error("Fehler beim Abrufen der kombinierten Daten:", (error as Error).message);

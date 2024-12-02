@@ -35,8 +35,8 @@ interface DatasProps {
     moonPhase?: string;
     moonAltitude?: number; // Typ geändert
     moonAzimuth?: number; // Typ geändert
-    moonDistanceAU: string;
-    moonDistanceKM: string;
+    moonDistanceAU: number; // Typ geändert
+    moonDistanceKM: number; // Typ geändert
   };
 }
 
@@ -46,7 +46,6 @@ export const Datas: React.FC<DatasProps> = ({ initialAstronomyData }) => {
   const [loading, setLoading] = useState(false);
 
   const handleCoordinatesLoaded = useCallback(async (coords: Coordinates) => {
-  
     setCoordinates(coords);
     setLoading(true);
     console.log("Koordinaten geladen:", coords); // Debugging-Informationen hinzufügen
@@ -115,8 +114,8 @@ export const Datas: React.FC<DatasProps> = ({ initialAstronomyData }) => {
       moonPhase: astronomyData.moonPhase,
       moonAltitude: astronomyData.moonAltitude?.toString(),
       moonAzimuth: astronomyData.moonAzimuth?.toString(),
-      moonDistanceAU: astronomyData.moonDistanceAU,
-      moonDistanceKM: astronomyData.moonDistanceKM,
+      moonDistanceAU: formatNumber(astronomyData.moonDistanceAU),
+      moonDistanceKM: formatNumber(astronomyData.moonDistanceKM),
     };
   }, [astronomyData]);
 

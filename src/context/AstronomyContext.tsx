@@ -45,30 +45,30 @@ export const useAstronomyContext = () => useContext(AstronomyContext);
 export const AstronomyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<AstronomyData>(defaultAstronomyData);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getCombinedAstronomyData(); // Abruf der kombinierten Daten
-        if (result) {
-          const roundedResult = {
-            ...result,
-            sunEclipticLongitude: roundToFourDecimals(result.sunEclipticLongitude),
-            moonEclipticLongitude: roundToFourDecimals(result.moonEclipticLongitude),
-            moonDistance: roundToFourDecimals(result.moonDistance),
-            sunDistance: roundToFourDecimals(result.sunDistance),
-            earthEclipticLongitude: roundToFourDecimals(result.earthEclipticLongitude),
-          };
-          const moonPhaseAngle = calculateMoonPhaseAngle(roundedResult.sunEclipticLongitude, roundedResult.moonEclipticLongitude); // Berechnung des Mondphasenwinkels
-          setData({ ...roundedResult, moonPhaseAngle }); // Setze die abgerufenen Daten inklusive des Winkels
-        } else {
-          console.error("Keine Daten gefunden");
-        }
-      } catch (error) {
-        console.error("Fehler beim Abrufen der astronomischen Daten:", error);
+  const fetchData = async (latitude?: number, longitude?: number) => {
+    try {
+      const result = await getCombinedAstronomyData(latitude, longitude); // Abruf der kombinierten Daten
+      if (result) {
+        const roundedResult = {
+          ...result,
+          sunEclipticLongitude: roundToFourDecimals(result.sunEclipticLongitude),
+          moonEclipticLongitude: roundToFourDecimals(result.moonEclipticLongitude),
+          moonDistance: roundToFourDecimals(result.moonDistance),
+          sunDistance: roundToFourDecimals(result.sunDistance),
+          earthEclipticLongitude: roundToFourDecimals(result.earthEclipticLongitude),
+        };
+        const moonPhaseAngle = calculateMoonPhaseAngle(roundedResult.sunEclipticLongitude, roundedResult.moonEclipticLongitude); // Berechnung des Mondphasenwinkels
+        setData({ ...roundedResult, moonPhaseAngle }); // Setze die abgerufenen Daten inklusive des Winkels
+      } else {
+        console.error("Keine Daten gefunden");
       }
-    };
+    } catch (error) {
+      console.error("Fehler beim Abrufen der astronomischen Daten:", error);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchData(); // Initialer Abruf mit Standardkoordinaten
   }, []);
 
   return (
