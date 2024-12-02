@@ -33,8 +33,8 @@ interface DatasProps {
     city?: string; // Optional gemacht
     country?: string; // Optional gemacht
     moonPhase?: string;
-    moonAltitude?: string; // Neue Daten
-    moonAzimuth?: string; // Neue Daten
+    moonAltitude?: number; // Typ geändert
+    moonAzimuth?: number; // Typ geändert
     moonDistanceAU: string;
     moonDistanceKM: string;
   };
@@ -74,8 +74,8 @@ export const Datas: React.FC<DatasProps> = ({ initialAstronomyData }) => {
         city: updatedAstronomyData.city,
         country: updatedAstronomyData.country,
         moonPhase: updatedAstronomyData.moonPhase,
-        moonAltitude: updatedAstronomyData.moonAltitude?.toString(),
-        moonAzimuth: updatedAstronomyData.moonAzimuth?.toString(),
+        moonAltitude: updatedAstronomyData.moonAltitude,
+        moonAzimuth: updatedAstronomyData.moonAzimuth,
         moonDistanceAU: updatedAstronomyData.moonDistanceAU,
         moonDistanceKM: updatedAstronomyData.moonDistanceKM,
       });
@@ -113,8 +113,8 @@ export const Datas: React.FC<DatasProps> = ({ initialAstronomyData }) => {
       city: astronomyData.city,
       country: astronomyData.country,
       moonPhase: astronomyData.moonPhase,
-      moonAltitude: astronomyData.moonAltitude,
-      moonAzimuth: astronomyData.moonAzimuth,
+      moonAltitude: astronomyData.moonAltitude?.toString(),
+      moonAzimuth: astronomyData.moonAzimuth?.toString(),
       moonDistanceAU: astronomyData.moonDistanceAU,
       moonDistanceKM: astronomyData.moonDistanceKM,
     };
