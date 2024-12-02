@@ -9,26 +9,28 @@ export async function getCombinedAstronomyData(latitude: number = 47.3769, longi
 
     const fetchNasaEndpoint = async (command: string, quantities: string, center: string = "500@399") => {
       const query = new URLSearchParams({
-        format: "text",
-        COMMAND: `'${command}'`,
-        OBJ_DATA: "'YES'",
-        MAKE_EPHEM: "'YES'",
-        EPHEM_TYPE: "'OBSERVER'",
-        CENTER: `'${center}'`,
-        START_TIME: `'${defaultStart}'`,
-        STOP_TIME: `'${defaultStop}'`,
-        STEP_SIZE: "'1 d'",
-        QUANTITIES: quantities,
+        command,
+        quantities,
+        center,
+        start: defaultStart,
+        stop: defaultStop,
       });
 
-      const nasaApiUrl = `https://ssd.jpl.nasa.gov/api/horizons.api?${query.toString()}`;
+      const nasaApiUrl = process.env.NODE_ENV === 'production'
+        ? `https://https://astro-clock-lo0lpjqcl-michimauchs-projects.vercel.app/api/nasa?${query.toString()}`
+        : `http://localhost:3001/api/nasa?${query.toString()}`;
+
+      console.log("Anfrage an Proxy-Server:", nasaApiUrl); // Debugging-Informationen hinzufügen
+
       const response = await fetch(nasaApiUrl, { method: "GET" });
 
       if (!response.ok) {
         throw new Error(`Fehler beim Abrufen der NASA-Daten: ${response.status}`);
       }
 
-      return response.text();
+      const data = await response.text();
+      console.log("NASA API Antwort:", data); // Debugging-Informationen hinzufügen
+      return data;
     };
 
     try {
@@ -61,6 +63,10 @@ export async function getCombinedAstronomyData(latitude: number = 47.3769, longi
       const parsedMoonDistanceData = extractEphemerisData(moonDistanceData);
       const parsedSunDistanceData = extractEphemerisData(sunDistanceData);
       const parsedEarthData = extractEphemerisData(earthData);
+
+      if (!parsedSunData[0] || !parsedMoonData[0] || !parsedMoonIlluminationData[0] || !parsedMoonDistanceData[0] || !parsedSunDistanceData[0] || !parsedEarthData[0]) {
+        throw new Error("Unvollständige NASA-Daten erhalten");
+      }
 
       return {
         sunEclipticLongitude: parseFloat(parsedSunData[0][2]),

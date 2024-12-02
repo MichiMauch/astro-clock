@@ -133,43 +133,48 @@ export const Datas: React.FC<DatasProps> = ({ initialAstronomyData }) => {
   }, [coordinates]);
 
   return (
-    <div className="p-4 bg-gray-100 rounded-md shadow-md">
-      <h2 className="text-xl font-bold mb-4">Astronomische Daten</h2>
+    <div className="relative">
+      <div className="absolute inset-0 z-0">
+        {/* Hier wird der animierte Hintergrund eingefügt */}
+      </div>
+      <div className="relative z-10 p-4 bg-white rounded-md shadow-md">
+        <h2 className="text-xl font-bold mb-4">Astronomische Daten</h2>
 
-      <Geolocation onCoordinatesLoaded={handleCoordinatesLoaded} />
+        <Geolocation onCoordinatesLoaded={handleCoordinatesLoaded} />
 
-      {loading || !astronomyData ? (
-        <p>Laden...</p>
-      ) : (
-        <ul>
-          <li>Sonnenekliptik: {formattedAstronomyData.sunEclipticLongitude}°</li>
-          <li>Mondekliptik: {formattedAstronomyData.moonEclipticLongitude}°</li>
-          <li>Mondbeleuchtung: {formattedAstronomyData.moonIllumination}%</li>
-          <li>Mondentfernung: {formattedAstronomyData.moonDistance} km</li>
-          <li>Sonnenentfernung: {formattedAstronomyData.sunDistance} km</li>
-          <li>Mondphase-Winkel: {moonPhaseAngle.toFixed(2)}°</li>
-          <li>Mondphase: {moonPhaseDescription}</li>
-          <li>Datum: {formattedAstronomyData.date}</li>
-          <li>Aktuelle Zeit: {formattedAstronomyData.currentTime}</li>
-          <li>Sonnenaufgang: {formattedAstronomyData.sunrise}</li>
-          <li>Sonnenuntergang: {formattedAstronomyData.sunset}</li>
-          <li>Sonnenstatus: {formattedAstronomyData.sunStatus}</li>
-          <li>Sonnenmittag: {formattedAstronomyData.solarNoon}</li>
-          <li>Tageslänge: {formattedAstronomyData.dayLength}</li>
-          <li>Mondaufgang: {formattedAstronomyData.moonrise}</li>
-          <li>Monduntergang: {formattedAstronomyData.moonset}</li>
-          <li>Adresse: <br /> 
-          {formattedAstronomyData.street} {formattedAstronomyData.houseNumber} <br />
-          {formattedAstronomyData.postcode} {formattedAstronomyData.city} <br />
-          {formattedAstronomyData.quarter} <br />
-          {formattedAstronomyData.country} </li>
-          <li>Koordinaten: {formattedCoordinates}</li>
-          <li>Mondentfernung (AU): {formattedAstronomyData.moonDistanceAU}</li>
-          <li>Mondentfernung (km): {formattedAstronomyData.moonDistanceKM}</li>
-          <li>Mondhöhe: {formattedAstronomyData.moonAltitude}</li>
-          <li>Mondazimut: {formattedAstronomyData.moonAzimuth}</li>
-        </ul>
-      )}
+        {loading || !astronomyData ? (
+          <p>Laden...</p>
+        ) : (
+          <ul>
+            <li>Sonnenekliptik: {formattedAstronomyData.sunEclipticLongitude}°</li>
+            <li>Mondekliptik: {formattedAstronomyData.moonEclipticLongitude}°</li>
+            <li>Mondbeleuchtung: {formattedAstronomyData.moonIllumination}%</li>
+            <li>Mondentfernung: {formattedAstronomyData.moonDistance} km</li>
+            <li>Sonnenentfernung: {formattedAstronomyData.sunDistance} km</li>
+            <li>Mondphase-Winkel: {moonPhaseAngle.toFixed(2)}°</li>
+            <li>Mondphase: {moonPhaseDescription}</li>
+            <li>Datum: {formattedAstronomyData.date}</li>
+            <li>Aktuelle Zeit: {formattedAstronomyData.currentTime}</li>
+            <li>Sonnenaufgang: {formattedAstronomyData.sunrise}</li>
+            <li>Sonnenuntergang: {formattedAstronomyData.sunset}</li>
+            <li>Sonnenstatus: {formattedAstronomyData.sunStatus}</li>
+            <li>Sonnenmittag: {formattedAstronomyData.solarNoon}</li>
+            <li>Tageslänge: {formattedAstronomyData.dayLength}</li>
+            <li>Mondaufgang: {formattedAstronomyData.moonrise}</li>
+            <li>Monduntergang: {formattedAstronomyData.moonset}</li>
+            <li>Adresse: <br /> 
+            {formattedAstronomyData.street} {formattedAstronomyData.houseNumber} <br />
+            {formattedAstronomyData.postcode} {formattedAstronomyData.city} <br />
+            {formattedAstronomyData.quarter} <br />
+            {formattedAstronomyData.country} </li>
+            <li>Koordinaten: {formattedCoordinates}</li>
+            <li>Mondentfernung (AU): {formattedAstronomyData.moonDistanceAU}</li>
+            <li>Mondentfernung (km): {formattedAstronomyData.moonDistanceKM}</li>
+            <li>Mondhöhe: {formattedAstronomyData.moonAltitude}</li>
+            <li>Mondazimut: {formattedAstronomyData.moonAzimuth}</li>
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
