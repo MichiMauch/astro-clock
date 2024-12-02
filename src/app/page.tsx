@@ -6,7 +6,6 @@ import MoonCard from "./cards/_components/MoonCard";
 import SunCard from "./cards/_components/SunCard";
 import "./cards/styles.css";
 import * as THREE from "three";
-import "./styles.css"; // Neue CSS-Datei importieren
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null); // Ref für den Hintergrund-Container
@@ -169,13 +168,7 @@ export default function Home() {
       <AstronomyProvider>
         <div
           ref={containerRef}
-          className="clock-container" // Neue CSS-Klasse hinzufügen
-          style={{
-            position: "relative",
-            width: "100vw",
-            height: "100vh",
-            overflow: "hidden", // Verhindert Scrollen
-          }}
+          className="w-full h-full flex flex-col lg:flex-row justify-center items-center lg:space-x-8 px-8" // Tailwind CSS-Klassen verwenden
         >
           <MoonCard />
           <ClockFace />
