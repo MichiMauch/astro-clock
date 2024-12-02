@@ -18,13 +18,7 @@ const ClockFace: React.FC = () => {
   return (
     <svg
       viewBox="0 0 100 100"
-      style={{
-        width: "60vmin", // 60% of the smaller screen dimension
-        height: "60vmin", // Keeps the clock square
-        maxWidth: "80vmin", // Max width for larger screens
-        maxHeight: "80vmin", // Max height for larger screens
-        zIndex: 10,
-      }}
+      className="w-[60vmin] h-[60vmin] max-w-[80vmin] max-h-[80vmin] z-10"
     >
       <circle
         cx="50%"

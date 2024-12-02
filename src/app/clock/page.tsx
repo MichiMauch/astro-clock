@@ -7,18 +7,7 @@ export default function Home() {
   return (
     <main className="flex justify-center items-center min-h-screen bg-gray-100">
       <AstronomyProvider>
-        <div
-          style={{
-            position: "relative",
-            width: "100vw",
-            height: "100vh",
-            overflow: "hidden", // Prevents scrolling
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center", // Zentriert den Inhalt
-          }}
-          className="container"
-        >
+        <div className="relative w-full h-full overflow-hidden flex justify-center items-center container">
           <ClockFace />
         </div>
       </AstronomyProvider>
