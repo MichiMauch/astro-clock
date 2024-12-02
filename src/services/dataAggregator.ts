@@ -17,7 +17,7 @@ export async function getCombinedAstronomyData(latitude: number = 47.3769, longi
       });
 
       const nasaApiUrl = process.env.NODE_ENV === 'production'
-        ? `https://https://astro-clock-lo0lpjqcl-michimauchs-projects.vercel.app/api/nasa?${query.toString()}`
+        ? `https://astro-clock-lo0lpjqcl-michimauchs-projects.vercel.app/api/nasa?${query.toString()}`
         : `http://localhost:3001/api/nasa?${query.toString()}`;
 
       console.log("Anfrage an Proxy-Server:", nasaApiUrl); // Debugging-Informationen hinzufügen
