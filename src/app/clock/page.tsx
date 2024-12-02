@@ -2,7 +2,6 @@
 import React from "react";
 import ClockFace from "../clock/_components/ClockFace";
 import { AstronomyProvider } from "../../context/AstronomyContext";
-import "./cards/styles.css"; // Importieren Sie die CSS-Datei
 
 export default function Home() {
   return (
