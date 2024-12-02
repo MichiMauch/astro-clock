@@ -3,20 +3,9 @@ import React from "react";
 const MoonCard: React.FC = () => {
   return (
     <div
-      style={{
-        position: "absolute",
-        left: "10%",
-        width: "20%",
-        height: "50%",
-        backgroundColor: "rgba(255, 255, 255, 0.8)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 10,
-      }}
-      className="moon-card"
+      className="relative m-4 w-11/12 max-w-xs h-auto bg-white bg-opacity-80 flex justify-center items-center z-10 flex-shrink-0 lg:mx-4" // Tailwind CSS-Klassen verwenden
     >
-      <p className="text-center text-xl">Informationen zur Uhr</p>
+      <p className="text-center text-xl">Informationen zur Uhr. Zusätzliche Informationen, hier könnte man text schreiben. Zusätzliche Informationen, hier könnte man text schreiben. Zusätzliche Informationen, hier könnte man text schreiben.</p>
     </div>
   );
 };
