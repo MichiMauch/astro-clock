@@ -21,6 +21,7 @@ export async function getCombinedAstronomyData(latitude: number = 47.3769, longi
         : `http://localhost:3000/api/nasa?${query.toString()}`;
 
       console.log("Anfrage an Proxy-Server:", nasaApiUrl); // Debugging-Informationen hinzufügen
+      console.log("Frontend-Request an API-Route:", nasaApiUrl);
 
       const response = await fetch(nasaApiUrl, { method: "GET" });
 
