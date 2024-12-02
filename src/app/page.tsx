@@ -12,7 +12,12 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null); // Ref für den Hintergrund-Container
 
   useEffect(() => {
-    let scene: THREE.Scene, camera: THREE.Camera, renderer: THREE.WebGLRenderer, uniforms: any;
+    let scene: THREE.Scene, camera: THREE.Camera, renderer: THREE.WebGLRenderer;
+    let uniforms: {
+      iTime: { value: number };
+      iResolution: { value: THREE.Vector2 };
+      iMouse: { value: THREE.Vector2 };
+    };
 
     function init() {
       console.log("Initializing stars...");
