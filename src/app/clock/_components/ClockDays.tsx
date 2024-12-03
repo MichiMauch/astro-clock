@@ -18,7 +18,9 @@ const ClockDays: React.FC<ClockDaysProps> = ({
 }) => {
   const centerX = 50; // Zentrum des SVG (50%)
   const centerY = 50;
-  const today = new Date().getDate(); // Aktueller Tag
+  const today = new Date().getUTCDate(); // Aktueller Tag
+  console.log("Aktueller Tag:", today); // Füge dies ein
+
 
   return (
     <g>

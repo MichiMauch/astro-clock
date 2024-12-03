@@ -1,4 +1,9 @@
 {
-    "framework": "nextjs"
-  }
-  
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/src/app/(.*)",
+      "destination": "/src/app/$1"
+    }
+  ]
+}
