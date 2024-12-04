@@ -10,15 +10,21 @@ import ClockMinutes from "./ClockMinutes";
 import ClockMoonPhase from "./ClockMoonPhase";
 import ClockMoonIcons from "./ClockMoonIcons";
 
-const ClockFace: React.FC = () => {
+type ClockFaceProps = {
+  className?: string;
+};
+
+const ClockFace: React.FC<ClockFaceProps> = ({ className }) => {
   const currentDate = new Date();
   const currentDay = currentDate.getDate(); // Aktueller Tag
   const currentMonth = currentDate.getMonth(); // Aktueller Monat
 
   return (
+    <div className={`transform transition-transform duration-300 ${className || ""} hover:scale-150  hover:z-50`}>
+
     <svg
       viewBox="0 0 100 100"
-      className="w-[60vmin] h-[60vmin] max-w-[80vmin] max-h-[80vmin] z-10"
+      className={`w-[60vmin] h-[60vmin] max-w-[80vmin] max-h-[80vmin] z-10 ${className || ""}`}
     >
       <circle
         cx="50%"
@@ -75,7 +81,7 @@ const ClockFace: React.FC = () => {
       <ClockMinutes radius={7} centerX={50} centerY={40} />
       <ClockMoonPhase radius={7} centerX={50} centerY={60} />
       <ClockHourHand radius={30} centerX={50} centerY={50} />
-    </svg>
+    </svg></div>
   );
 };
 
