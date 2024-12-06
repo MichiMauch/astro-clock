@@ -1,11 +1,9 @@
-"use client";
-import React from "react";
-import { clockConfig } from "../_config/config";
+import React, { useEffect, useState } from "react";
 
 interface ClockMoonPhaseProps {
-  radius: number; // Radius des Kreises
-  centerX: number; // X-Koordinate des Mittelpunkts (z. B. 50%)
-  centerY: number; // Y-Koordinate des Mittelpunkts (z. B. 50%)
+  radius: number;
+  centerX: number;
+  centerY: number;
 }
 
 const ClockMoonPhase: React.FC<ClockMoonPhaseProps> = ({
@@ -13,18 +11,64 @@ const ClockMoonPhase: React.FC<ClockMoonPhaseProps> = ({
   centerX,
   centerY,
 }) => {
+  const [moonImage, setMoonImage] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Setze den Zustand auf true, wenn das Fensterobjekt verfügbar ist
+
+    const fetchMoonImage = async () => {
+      const now = new Date(); // Aktuelle Zeit
+      const today = now.toISOString().split("T")[0]; // Aktuelles Datum im Format YYYY-MM-DD
+      const currentHour = now.getUTCHours(); // Aktuelle Stunde in UTC
+      const apiUrl = `https://svs.gsfc.nasa.gov/api/dialamoon/${today}T${String(currentHour).padStart(2, '0')}:00`;
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (data.image && data.image.url) {
+          setMoonImage(data.image.url); // URL des JPG-Bilds speichern
+        }
+      } catch (error) {
+        console.error("Fehler beim Abrufen des Mondbildes:", error);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      fetchMoonImage();
+    }
+  }, []);
+
+  if (!isClient) {
+    return null; // Rendern Sie nichts, bis das Fensterobjekt verfügbar ist
+  }
+
+  if (!moonImage) {
+    return <p>Lade Mondbild...</p>;
+  }
+
   return (
-    <g>
-      {/* Kreis für die Mondphasen */}
-      <circle
-        cx={`${centerX}%`} // X-Koordinate
-        cy={`${centerY}%`} // Y-Koordinate
-        r={`${radius}%`} // Radius
-        fill={clockConfig.colors.moonPhaseFill} // Füllfarbe aus Config
-        stroke={clockConfig.colors.moonPhaseStroke} // Rahmenfarbe aus Config
-        strokeWidth={clockConfig.strokeWidths.moonPhase} // Rahmenbreite aus Config
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      {/* Kreis als Rahmen */}
+      <circle cx={centerX} cy={centerY} r={radius} fill="none" stroke="none" />
+      
+      {/* Mondbild */}
+      <defs>
+        <clipPath id="circleClip">
+          <circle cx={centerX} cy={centerY} r={radius} />
+        </clipPath>
+      </defs>
+      <image
+        href={moonImage}
+        x={centerX - radius}
+        y={centerY - radius}
+        width={radius * 2}
+        height={radius * 2}
+        clipPath="url(#circleClip)"
+        style={{
+          filter: "sepia(0.6) brightness(1.2)", // Sepia für Gelbton, Brightness für Helligkeit
+        }}
       />
-    </g>
+    </svg>
   );
 };
 

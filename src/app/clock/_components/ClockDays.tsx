@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { clockConfig } from "../_config/config";
 
 interface ClockDaysProps {
@@ -16,11 +16,23 @@ const ClockDays: React.FC<ClockDaysProps> = ({
   currentDay,
   offset = 0, // Standardwert für den Offset: 0
 }) => {
+  const [today, setToday] = useState<number | null>(null); // Aktueller Tag
+
+  useEffect(() => {
+    const updateToday = () => setToday(new Date().getUTCDate());
+    if (typeof window !== 'undefined') {
+      updateToday();
+      const interval = setInterval(updateToday, 86400000); // Aktualisiere täglich (86400000 ms = 24 Stunden)
+      return () => clearInterval(interval); // Bereinige das Intervall beim Unmounten
+    }
+  }, []);
+
   const centerX = 50; // Zentrum des SVG (50%)
   const centerY = 50;
-  const today = new Date().getUTCDate(); // Aktueller Tag
-  console.log("Aktueller Tag:", today); // Füge dies ein
 
+  if (today === null) {
+    return null; // Rendern Sie nichts, bis der aktuelle Tag gesetzt ist
+  }
 
   return (
     <g>
@@ -37,7 +49,7 @@ const ClockDays: React.FC<ClockDaysProps> = ({
         const y = roundToFourDecimals(centerY + (radius + offset) * Math.sin(radian)); // y-Koordinate
 
         return (
-            <text
+          <text
             key={num}
             x={x + "%"} // Position
             y={y + "%"}

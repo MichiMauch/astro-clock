@@ -14,6 +14,7 @@ interface AstronomyData {
   date?: string;
   sunrise?: string;
   sunset?: string;
+  moonPhase?: string;
 }
 
 // Standardwerte für den Kontext
@@ -25,6 +26,7 @@ const defaultAstronomyData: AstronomyData = {
   sunDistance: 0,
   earthEclipticLongitude: 0,
   moonPhaseAngle: 0, // Standardwert
+  moonPhase: "0",
 };
 
 // Berechnung des Mondphasenwinkels

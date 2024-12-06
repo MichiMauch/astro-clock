@@ -168,6 +168,7 @@ export const Datas: React.FC<DatasProps> = ({ initialAstronomyData }) => {
             {formattedAstronomyData.quarter} <br />
             {formattedAstronomyData.country} </li>
             <li>Koordinaten: {formattedCoordinates}</li>
+            <li>Mondphase: {formattedAstronomyData.moonPhase}</li>
             <li>Mondentfernung (AU): {formattedAstronomyData.moonDistanceAU}</li>
             <li>Mondentfernung (km): {formattedAstronomyData.moonDistanceKM}</li>
             <li>Mondhöhe: {formattedAstronomyData.moonAltitude}</li>
