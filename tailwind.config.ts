@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      scale: {
+        '200': '2.0', // Skaliert auf 200%
+        '300': '3.0', // Skaliert auf 175%
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

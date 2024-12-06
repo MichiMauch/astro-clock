@@ -1,4 +1,3 @@
-// clock/_components/ClockFace.tsx
 import React from "react";
 import { clockConfig } from "../_config/config";
 import ClockDays from "./ClockDays";
@@ -6,10 +5,9 @@ import ClockMonths from "./ClockMonths";
 import ClockHours from "./ClockHours";
 import ClockHourHand from "./ClockHourHand";
 import ClockZodiac from "./ClockZodiac";
-import ClockMinutes from "./ClockMinutes";
+import ClockEarthPhase from "./ClockEarthPhase";
 import ClockMoonPhase from "./ClockMoonPhase";
-import ClockMoonIcons from "./ClockMoonIcons";
-
+import ClockEarthOrbit from "./ClockEarthOrbit";
 
 type ClockFaceProps = {
   className?: string;
@@ -21,10 +19,12 @@ const ClockFace: React.FC<ClockFaceProps> = ({ className }) => {
   const currentMonth = currentDate.getMonth(); // Aktueller Monat
 
   return (
-    <div className={`transform transition-transform duration-300 ${className || ""} hover:scale-150  hover:z-50`}>
+    <div
+      className={`transform transition-transform duration-300 relative ${className || ""} hover:scale-150 hover:z-50`}
+    >
       <svg
         viewBox="0 0 100 100"
-        className={`w-[60vmin] h-[60vmin] max-w-[80vmin] max-h-[80vmin] z-10 ${className || ""}`}
+        className={`w-[60vmin] h-[60vmin] max-w-[80vmin] max-h-[80vmin] z-10`}
       >
         <circle
           cx="50%"
@@ -77,10 +77,21 @@ const ClockFace: React.FC<ClockFaceProps> = ({ className }) => {
           strokeWidth={clockConfig.strokeWidths.face5}
         />
         <ClockZodiac radius={28} centerX={50} centerY={50} />
-        <ClockMoonIcons radius={20.5} centerX={50} centerY={50} />
-        <ClockMinutes radius={7} centerX={50} centerY={40} />
-        <ClockMoonPhase radius={7} centerX={50} centerY={60} />
         <ClockHourHand radius={30} centerX={50} centerY={50} />
+        <ClockEarthOrbit radius={20.5} centerX={50} centerY={50} />
+        {/* Erdphase */}
+          <ClockEarthPhase
+            radius={7}
+            centerX={50}
+            centerY={40}
+          />
+        {/* Mondphase */}
+          <ClockMoonPhase
+            radius={7}
+            centerX={50}
+            centerY={60}
+          />
+        
       </svg>
     </div>
   );

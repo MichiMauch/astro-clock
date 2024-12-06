@@ -1,15 +1,16 @@
+"use client";
 import React, { useEffect, useState } from "react";
 
 interface ClockMoonPhaseProps {
-  radius: number;
-  centerX: number;
-  centerY: number;
+  radius: number; // Radius des Mondkreises
+  centerX: number; // X-Koordinate des Mittelpunkts
+  centerY: number; // Y-Koordinate des Mittelpunkts
 }
 
 const ClockMoonPhase: React.FC<ClockMoonPhaseProps> = ({
   radius,
   centerX,
-  centerY,
+  centerY, // Standardklasse
 }) => {
   const [moonImage, setMoonImage] = useState<string | null>(null);
   const [isClient, setIsClient] = useState(false);
@@ -33,7 +34,7 @@ const ClockMoonPhase: React.FC<ClockMoonPhaseProps> = ({
       }
     };
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       fetchMoonImage();
     }
   }, []);
@@ -47,28 +48,26 @@ const ClockMoonPhase: React.FC<ClockMoonPhaseProps> = ({
   }
 
   return (
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      {/* Kreis als Rahmen */}
-      <circle cx={centerX} cy={centerY} r={radius} fill="none" stroke="none" />
-      
-      {/* Mondbild */}
+    <g
+    >
       <defs>
-        <clipPath id="circleClip">
+        <clipPath id="moonCircleClip">
           <circle cx={centerX} cy={centerY} r={radius} />
         </clipPath>
       </defs>
+      <circle cx={centerX} cy={centerY} r={radius} />
       <image
         href={moonImage}
-        x={centerX - radius}
-        y={centerY - radius}
-        width={radius * 2}
-        height={radius * 2}
-        clipPath="url(#circleClip)"
+        x={centerX - radius * 1.1} // 10% größer
+        y={centerY - radius * 1.1} // 10% größer
+        width={radius * 2.2} // Breite um 10% erhöhen
+        height={radius * 2.2} // Höhe um 10% erhöhen
+        clipPath="url(#moonCircleClip)"
         style={{
           filter: "sepia(0.6) brightness(1.2)", // Sepia für Gelbton, Brightness für Helligkeit
         }}
       />
-    </svg>
+    </g>
   );
 };
 
