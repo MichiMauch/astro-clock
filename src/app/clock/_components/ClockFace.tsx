@@ -5,8 +5,6 @@ import ClockMonths from "./ClockMonths";
 import ClockHours from "./ClockHours";
 import ClockHourHand from "./ClockHourHand";
 import ClockZodiac from "./ClockZodiac";
-import ClockEarthPhase from "./ClockEarthPhase";
-import ClockMoonPhase from "./ClockMoonPhase";
 import ClockEarthOrbit from "./ClockEarthOrbit";
 
 type ClockFaceProps = {
