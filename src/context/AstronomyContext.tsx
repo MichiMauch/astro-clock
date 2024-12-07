@@ -15,6 +15,10 @@ interface AstronomyData {
   sunrise?: string;
   sunset?: string;
   moonPhase?: string;
+  moonrise?: string;
+  moonset?: string;
+  dayLength?: string; // Tageslänge hinzufügen
+  solarNoon?: string;
 }
 
 // Standardwerte für den Kontext
@@ -27,6 +31,12 @@ const defaultAstronomyData: AstronomyData = {
   earthEclipticLongitude: 0,
   moonPhaseAngle: 0, // Standardwert
   moonPhase: "0",
+  sunrise: "",
+  sunset: "",
+  moonrise: "",
+  moonset: "",
+  dayLength: "", // Standardwert für Tageslänge
+  solarNoon: "",
 };
 
 // Berechnung des Mondphasenwinkels
@@ -60,7 +70,16 @@ export const AstronomyProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           earthEclipticLongitude: roundToFourDecimals(result.earthEclipticLongitude),
         };
         const moonPhaseAngle = calculateMoonPhaseAngle(roundedResult.sunEclipticLongitude, roundedResult.moonEclipticLongitude); // Berechnung des Mondphasenwinkels
-        setData({ ...roundedResult, moonPhaseAngle }); // Setze die abgerufenen Daten inklusive des Winkels
+        setData({ 
+          ...roundedResult, 
+          moonPhaseAngle,
+          sunrise: result.sunrise,
+          sunset: result.sunset,
+          moonrise: result.moonrise,
+          moonset: result.moonset,
+          dayLength: result.dayLength, // Tageslänge hinzufügen
+          solarNoon: result.solarNoon,
+        }); // Setze die abgerufenen Daten inklusive des Winkels
       } else {
         console.error("Keine Daten gefunden");
       }

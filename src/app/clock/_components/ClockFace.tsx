@@ -78,19 +78,8 @@ const ClockFace: React.FC<ClockFaceProps> = ({ className }) => {
         />
         <ClockZodiac radius={28} centerX={50} centerY={50} />
         <ClockHourHand radius={30} centerX={50} centerY={50} />
-        <ClockEarthOrbit radius={20.5} centerX={50} centerY={50} />
-        {/* Erdphase */}
-          <ClockEarthPhase
-            radius={7}
-            centerX={50}
-            centerY={40}
-          />
-        {/* Mondphase */}
-          <ClockMoonPhase
-            radius={7}
-            centerX={50}
-            centerY={60}
-          />
+        <ClockEarthOrbit radius={14} centerX={50} centerY={50} />
+
         
       </svg>
     </div>

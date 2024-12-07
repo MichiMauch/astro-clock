@@ -23,27 +23,35 @@ const ClockEarth: React.FC<ClockEarthProps> = ({ radius, centerX, centerY }) => 
 
   return (
     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        {/* Erde auf der Umlaufbahn */}
+      {/* Umlaufbahn */}
+      <circle
+        cx={centerX}
+        cy={centerY}
+        r={radius}
+        stroke="gray"
+        strokeWidth="0.5"
+        fill="none"
+        strokeDasharray="1 1" // gestrichelte Linie
+      />
+      {/* Erde auf der Umlaufbahn */}
+      <image
+        href="https://upload.wikimedia.org/wikipedia/commons/7/7f/Rotating_earth_animated_transparent.gif"
+        x={earthX - 4}
+        y={earthY - 4}
+        height="8"
+        width="8"
+      />
+      {/* Gruppe für die Sonne */}
+      <g>
         <image
-          href="https://upload.wikimedia.org/wikipedia/commons/7/7f/Rotating_earth_animated_transparent.gif"
-          x={earthX - 3}
-          y={earthY - 3}
-          height="6"
-          width="6"
+          href="/images/sun.svg"
+          x={centerX - 5}
+          y={centerY - 5}
+          height="10"
+          width="10"
         />
-
-        {/* Gruppe für die Sonne */}
-        <g>
-          <image
-            href="https://media.giphy.com/media/Z9z9cdHRbC4D417iOU/giphy.gif"
-            x={centerX - 5}
-            y={centerY - 5}
-            height="10"
-            width="10"
-          />
-        </g>
-      </svg>
-
+      </g>
+    </svg>
   );
 };
 

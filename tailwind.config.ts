@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        dmmono: ['"DM Mono"', 'monospace'], // Nutzt DM Mono, Fallback: Monospace
+      },
       scale: {
         '200': '2.0', // Skaliert auf 200%
         '300': '3.0', // Skaliert auf 175%

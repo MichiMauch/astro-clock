@@ -11,18 +11,18 @@ const roundToFourDecimals = (num: number) => parseFloat(num.toFixed(4));
 
 const ClockMonths: React.FC<ClockMonthsProps> = ({ radius, currentMonth }) => {
   const monthNames = [
-    "Januar",
-    "Februar",
-    "März",
+    "January",
+    "February",
+    "March",
     "April",
-    "Mai",
-    "Juni",
-    "Juli",
+    "May",
+    "June",
+    "July",
     "August",
     "September",
-    "Oktober",
+    "October",
     "November",
-    "Dezember",
+    "December",
   ];
 
   const centerX = 50; // SVG-Zentrum (50%)
