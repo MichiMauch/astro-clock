@@ -31,6 +31,12 @@ export default {
       backgroundSize: {
         "200%": "200%",
       },
+      transform: {
+        'flip': 'rotateY(180deg)',
+      },
+      transitionProperty: {
+        'transform': 'transform',
+      },
     },
   },
   plugins: [],

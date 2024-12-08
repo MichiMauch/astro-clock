@@ -1,28 +1,29 @@
 export const clockConfig = {
   colors: {
-    faceFill1: "#ffffff", // Außenkreis
-    faceStroke1: "#000000", // Außenkreis
-    faceFill2: "#ffffff", // zweiter Kreis
-    faceStroke2: "#000000", // zweiter Kreis
-    faceFill3: "#ffffff", // dritter Kreis
-    faceStroke3: "#000000", // dritter Kreis
-    faceFill4: "#ffffff", // vierter Kreis
-    faceStroke4: "#000000", // vierter Kreis
-    faceFill5: "#ffffff", // fünfter Kreis
-    faceStroke5: "#000000", // fünfter Kreis
-    dayColor: "#000000", // Farbe der Zahlen
-    currentDayMonthColor: "#FF0000", // Farbe des aktuellen Monats
-    hourColor: "#000000", // Normale Farbe für Stunden
-    currentHourColor: "#ff0000", // Farbe für die aktuelle Stunde
-    handhourColor: "#ff0000", // Farbe des Zeigers
-    zodiacPointerColor: "#000000", // Farbe des Zeigers
+    faceFill1: "#000000", // Außenkreis
+    faceStroke1: "#ffffff", // Außenkreis
+    faceFill2: "#000000", // zweiter Kreis
+    faceStroke2: "#ffffff", // zweiter Kreis
+    faceFill3: "#000000", // dritter Kreis
+    faceStroke3: "#ffffff", // dritter Kreis
+    faceFill4: "#000000", // vierter Kreis
+    faceStroke4: "#ffffff", // vierter Kreis
+    faceFill5: "#000000", // fünfter Kreis
+    faceStroke5: "#ffffff", // fünfter Kreis
+    dayColor: "#ffffff", // Farbe der Zahlen
+    currentDayMonthColor: "gold", // Farbe des aktuellen Monats
+    hourColor: "#ffffff", // Normale Farbe für Stunden
+    currentHourColor: "#gold", // Farbe für die aktuelle Stunde
+    handhourColor: "#ffffff", // Farbe des Zeigers
+    zodiacPointerColor: "#ffffff", // Farbe des Zeigers
     circleStroke: "black", // Farbe des Minutenkreisrahmens
     minuteHand: "black", // Farbe des Minutenzeigers
     secondHand: "red", // Farbe des Sekundenzeigers
     secondHandDot: "red", // Farbe des roten Punktes am Sekundenzeiger
-    moonPhaseFill: "#ffffff", // Füllfarbe des Kreises
-    moonPhaseStroke: "#000000", // Rahmenfarbe des Kreises
+    moonPhaseFill: "#000000", // Füllfarbe des Kreises
+    moonPhaseStroke: "#ffffff", // Rahmenfarbe des Kreises
     moonPointerColor: "gold", // Farbe des Mondphasenzeigers
+    earthOrbitColor: "gray", // Farbe der Umlaufbahn
 
   },
   sizes: {
@@ -36,7 +37,7 @@ export const clockConfig = {
     currentDayFontSize: "15%", // Schriftgröße des aktuellen Monats
     hourFontSize: "15%", // Schriftgröße für normale Stunden
     currentHourFontSize: "15%", // Größere Schriftgröße für die aktuelle Stunde
-    handhourWidth: "1", // Dicke des Zeigers
+    handhourWidth: 0.8, // Dicke des Zeigers
     secondHandDot: 0.8, // Radius des roten Punktes am Sekundenzeiger (in Prozent)
 
 
@@ -47,12 +48,13 @@ export const clockConfig = {
     face3: 0.5,  // Liniendicke des Außenkreises 3
     face4: 0.5,  // Liniendicke des Außenkreises 4
     face5: 0.5,  // Liniendicke des Außenkreises 4
-    zodiacPointer: 0.5, // Liniendicke des Zeigers
+    zodiacPointer: 0.8, // Liniendicke des Zeigers
     moonPointer: 1, // Liniendicke des MondphasenZeigers
     circleStroke: 0.5, // Dicke des Minutenkreisrahmens
     minuteHand: 0.6, // Dicke des Minutenzeigers
     secondHand: 0.2, // Dicke des Sekundenzeigers
     moonPhase: 0.5, // Breite des Rahmens für den Kreis
+    earthOrbit: 0.5, // Dicke der Umlaufbahn
 
 
   },

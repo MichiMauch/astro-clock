@@ -1,4 +1,6 @@
 import React from "react";
+import { clockConfig } from "../_config/config";
+
 
 interface ClockEarthProps {
   radius: number; // Umlaufbahnradius
@@ -28,8 +30,8 @@ const ClockEarth: React.FC<ClockEarthProps> = ({ radius, centerX, centerY }) => 
         cx={centerX}
         cy={centerY}
         r={radius}
-        stroke="gray"
-        strokeWidth="0.5"
+        stroke={clockConfig.colors.earthOrbitColor}
+        strokeWidth={clockConfig.strokeWidths.earthOrbit}
         fill="none"
         strokeDasharray="1 1" // gestrichelte Linie
       />

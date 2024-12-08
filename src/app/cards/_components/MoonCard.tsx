@@ -63,8 +63,8 @@ const SunCard: React.FC = () => {
   }
 
   return (
-    <div className="relative m-4 p-8 w-11/12 bg-opacity-70 text-white max-w-xs h-auto bg-black flex justify-center items-center z-10 flex-shrink-0 lg:mx-4">
-      <div className="font-dmmono text-center text-base">
+<div className="relative m-4 p-8 w-full max-w-[400px] flex flex-col items-center justify-center bg-black bg-opacity-70 text-white rounded-lg">
+  <div className="font-dmmono text-center text-base">
         <div className="flex justify-between items-center">
             <div className="flex items-center">
               <img src={MoonriseIcon} alt="Moonrise" className="w-6 h-6 mr-2" />
@@ -79,8 +79,8 @@ const SunCard: React.FC = () => {
           <div
             className="items-center mt-4 rounded-full overflow-hidden"
             style={{
-              width: "200px", // Festlegen der Breite
-              height: "200px", // Festlegen der Höhe
+              width: "250px", // Festlegen der Breite
+              height: "250px", // Festlegen der Höhe
               clipPath: "circle(50%)", // Zuschneiden des Bildes zu einem Kreis
             }}
           >
