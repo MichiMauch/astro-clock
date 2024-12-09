@@ -12,6 +12,7 @@ const ApodImage = () => {
   const [translatedText, setTranslatedText] = useState<string | null>(null);
   const [showTranslation, setShowTranslation] = useState(false);
   const [translatedTitle, setTranslatedTitle] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchApodImage = async () => {
@@ -65,12 +66,17 @@ const ApodImage = () => {
         console.error("Error fetching APOD or translating:", error);
         if (error instanceof Error) {
           console.error("Error message:", error.message);
+          setError(error.message);
         }
       }
     };
 
     fetchApodImage();
   }, []);
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   if (!imageData) {
     return <p>Loading image...</p>;

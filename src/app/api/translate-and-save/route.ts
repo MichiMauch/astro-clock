@@ -42,7 +42,18 @@ export async function POST(req: Request) {
 
     // Übersetzen des Textes mit OpenAI
     console.log("Translating text with OpenAI...");
-    const textResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    const fetchWithTimeout = async (resource: string, options: RequestInit, timeout: number) => {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
+      const response = await fetch(resource, {
+        ...options,
+        signal: controller.signal,
+      });
+      clearTimeout(id);
+      return response;
+    };
+
+    const textResponse = await fetchWithTimeout("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +68,7 @@ export async function POST(req: Request) {
         max_tokens: 1000,
         temperature: 0.7,
       }),
-    });
+    }, 10000); // 10 Sekunden Timeout
 
     if (!textResponse.ok) {
       console.error(`OpenAI API request failed: ${textResponse.status}`);
@@ -75,7 +86,7 @@ export async function POST(req: Request) {
 
     // Übersetzen des Titels mit OpenAI
     console.log("Translating title with OpenAI...");
-    const titleResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    const titleResponse = await fetchWithTimeout("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +101,7 @@ export async function POST(req: Request) {
         max_tokens: 1000,
         temperature: 0.7,
       }),
-    });
+    }, 10000); // 10 Sekunden Timeout
 
     if (!titleResponse.ok) {
       console.error(`OpenAI API request failed: ${titleResponse.status}`);
