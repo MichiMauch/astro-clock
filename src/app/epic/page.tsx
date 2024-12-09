@@ -1,5 +1,5 @@
 import React from "react";
-import EarthImageGallery from "./_components/EarthImageWidget";
+import EarthImageGallery from "./box1/EarthImageWidget";
 
 const Home: React.FC = () => {
   return (

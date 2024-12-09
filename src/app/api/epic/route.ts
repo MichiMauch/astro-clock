@@ -1,18 +1,22 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
   const { NASA_API_KEY } = process.env;
 
   if (!NASA_API_KEY) {
     return NextResponse.json({ error: "NASA API Key not configured" }, { status: 500 });
   }
 
-  try {
-    // Datum festlegen (07.12.2024)
-    const specificDate = "2024-12-06";
+  const url = new URL(request.url);
+  const date = url.searchParams.get("date");
 
+  if (!date) {
+    return NextResponse.json({ error: "Date parameter is required" }, { status: 400 });
+  }
+
+  try {
     const response = await fetch(
-      `https://api.nasa.gov/EPIC/api/natural/date/${specificDate}?api_key=${NASA_API_KEY}`
+      `https://api.nasa.gov/EPIC/api/natural/date/${date}?api_key=${NASA_API_KEY}`
     );
 
     if (!response.ok) {

@@ -1,11 +1,20 @@
-"use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const EarthImageWidget: React.FC = () => {
+const useEarthImage = () => {
   const [imageUrlList, setImageUrlList] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [inputDate, setInputDate] = useState<string>(""); // Eingabedatum im Format tt.mm.jjjj
+
+  const getYesterdayDate = () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const day = String(yesterday.getDate()).padStart(2, '0');
+    const month = String(yesterday.getMonth() + 1).padStart(2, '0');
+    const year = yesterday.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+
+  const [inputDate, setInputDate] = useState<string>(getYesterdayDate()); // Eingabedatum im Format tt.mm.jjjj
   const [currentIndex, setCurrentIndex] = useState<number>(0); // Aktueller Index für die Animation
   const [imagesPreloaded, setImagesPreloaded] = useState<boolean>(false); // Status für vorgeladene Bilder
 
@@ -76,49 +85,22 @@ const EarthImageWidget: React.FC = () => {
     if (imagesPreloaded && imageUrlList.length > 0) {
       const interval = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % imageUrlList.length); // Nächster Index, zyklisch
-      }, 300); // Alle 500ms wechseln
+      }, 1000); // Alle 500ms wechseln
 
       return () => clearInterval(interval); // Cleanup, wenn Komponente unmountet
     }
   }, [imagesPreloaded, imageUrlList]);
 
-  return (
-    <div className="text-center z-10 p-4">
-      <h2 className="text-lg font-bold mb-4">Earth Image Widget</h2>
-
-      {/* Eingabefeld für Datum */}
-      <div className="mb-4 flex justify-center items-center">
-        <input
-          type="text"
-          placeholder="tt.mm.jjjj"
-          value={inputDate}
-          onChange={(e) => setInputDate(e.target.value)}
-          className="border border-gray-300 p-2 rounded w-60 text-center shadow-sm focus:ring focus:ring-blue-300"
-        />
-        <button
-          onClick={handleFetchImages}
-          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:ring focus:ring-blue-300"
-        >
-          Fetch Images
-        </button>
-      </div>
-
-      {/* Fehler oder Ladeanzeige */}
-      {loading && <p className="text-blue-500">Loading images...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-
-      {/* Animiertes Bild */}
-      {imagesPreloaded && imageUrlList.length > 0 && !loading && !error && (
-        <div className="mt-4 relative w-full h-auto">
-          <img
-            src={imageUrlList[currentIndex]}
-            alt={`Earth Image ${currentIndex + 1}`}
-            className="w-full h-auto rounded shadow-md"
-          />
-        </div>
-      )}
-    </div>
-  );
+  return {
+    imageUrlList,
+    loading,
+    error,
+    inputDate,
+    setInputDate,
+    currentIndex,
+    imagesPreloaded,
+    handleFetchImages,
+  };
 };
 
-export default EarthImageWidget;
+export default useEarthImage;

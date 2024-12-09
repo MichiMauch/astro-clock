@@ -38,7 +38,10 @@ const ApodImage = () => {
           };
 
           // Logge den Request-Body für die Übersetzung
-          console.log("Request Body for translate-and-save:", translationRequestBody);
+          console.log(
+            "Request Body for translate-and-save:",
+            translationRequestBody
+          );
 
           const translationResponse = await fetch("/api/translate-and-save", {
             method: "POST",
@@ -52,7 +55,8 @@ const ApodImage = () => {
             throw new Error("Error translating and saving explanation.");
           }
 
-          const { translatedText, translatedTitle } = await translationResponse.json();
+          const { translatedText, translatedTitle } =
+            await translationResponse.json();
 
           // Logge die übersetzte Antwort
           console.log("Translated Text Response:", translatedText);
@@ -83,8 +87,8 @@ const ApodImage = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-start bg-black rounded-lg">
-      <div className="w-full md:w-1/2 flex-shrink-0 pl-8">
+    <div className="flex flex-col md:flex-row justify-center items-start bg-black rounded-lg p-8 gap-8">
+      <div className="w-full md:w-1/2 flex-shrink-0">
         {imageData.media_type === "image" ? (
           <img
             src={imageData.url}
@@ -99,10 +103,12 @@ const ApodImage = () => {
           />
         )}
       </div>
-      <div className="w-full md:w-1/2 ml-4 text-gray-300 p-8">
+      <div className="w-full md:w-1/2 text-gray-300">
         <p className="text-sm mb-2">NASA Astronomy Picture of the day</p>
         <h1 className="text-2xl font-bold mb-4 font-dmmono underline decoration-dotted">
-          {showTranslation && translatedTitle ? translatedTitle : imageData.title}
+          {showTranslation && translatedTitle
+            ? translatedTitle
+            : imageData.title}
         </h1>
         {showTranslation && translatedText ? (
           <div>
