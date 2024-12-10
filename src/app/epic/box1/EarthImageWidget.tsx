@@ -14,15 +14,6 @@ const EarthImageWidget: React.FC = () => {
     handleFetchImages,
   } = useEarthImage();
 
-  // const handleFetchImages = async () => {
-  //   try {
-  //     const response = await fetch(`/api/epic?date=${inputDate}`);
-  //     // ...existing code...
-  //   } catch (error) {
-  //     // ...existing code...
-  //   }
-  // };
-
   useEffect(() => {
     handleFetchImages();
   }, []);

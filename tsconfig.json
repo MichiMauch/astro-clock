@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-  "target": "ES2017",
+  "target": "ESNext",
   "lib": ["dom", "dom.iterable", "esnext"],
   "allowJs": true,
   "skipLibCheck": true,
   "strict": true,
   "noEmit": true,
   "esModuleInterop": true,
-  "module": "esnext",
+  "module": "ESNext",
   "moduleResolution": "node",
   "resolveJsonModule": true,
   "isolatedModules": true,
@@ -23,6 +23,6 @@
   },
   "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/utils/orbit.js"],
   "exclude": ["node_modules"]
 }

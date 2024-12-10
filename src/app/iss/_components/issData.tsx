@@ -1,11 +1,21 @@
 "use client";
+
 import { useEffect, useState } from "react";
 
 interface IssData {
+  name: string;
+  id: number;
   latitude: number;
   longitude: number;
   altitude: number;
   velocity: number;
+  visibility: string;
+  footprint: number;
+  timestamp: number;
+  daynum: number;
+  solar_lat: number;
+  solar_lon: number;
+  units: string;
 }
 
 export default function IssData() {
@@ -33,7 +43,7 @@ export default function IssData() {
     fetchData();
 
     // Aktualisiere die Daten alle 3 Sekunden
-    const interval = setInterval(fetchData, 3000);
+    const interval = setInterval(fetchData, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -44,18 +54,13 @@ export default function IssData() {
         {error && <p className="text-red-500">{error}</p>}
         {data ? (
           <div>
-            <p>
-              <strong>Latitude:</strong> {data.latitude.toFixed(2)}
-            </p>
-            <p>
-              <strong>Longitude:</strong> {data.longitude.toFixed(2)}
-            </p>
-            <p>
-              <strong>Altitude:</strong> {data.altitude.toFixed(2)} km
-            </p>
-            <p>
-              <strong>Velocity:</strong> {data.velocity.toFixed(2)} km/h
-            </p>
+            <ul className="text-left">
+              {Object.entries(data).map(([key, value]) => (
+                <li key={key}>
+                  <strong>{key}:</strong> {value}
+                </li>
+              ))}
+            </ul>
           </div>
         ) : (
           <p>Loading...</p>

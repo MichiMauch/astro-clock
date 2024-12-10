@@ -6,6 +6,9 @@ import MoonCard from "./cards/_components/MoonCard";
 import EarthCard from "./cards/_components/EarthCard";
 import ApodImage from "./imageoftheday/box1/imageoftheday";
 import EarthImageGallery from "./epic/box1/EarthImageWidget";
+import IssMap from "./iss/_components/issMap";
+import IssDataProvider, { IssContext } from "./iss/_components/issDataProvider";
+import { useContext } from "react";
 
 export default function Home() {
   return (
@@ -43,7 +46,26 @@ export default function Home() {
             <EarthImageGallery />
           </div>
         </div>
+
+        {/* Vierte Reihe */}
+        <div className="w-full flex flex-col lg:flex-row justify-center items-center pt-4 gap-4">
+          {/* Linke Box */}
+          <div className="flex flex-col items-center justify-center w-full lg:w-1/2 h-[500px] lg:h-[400px] md:h-[300px] sm:h-[200px]">
+            <IssDataProvider>
+              <IssMapWrapper />
+            </IssDataProvider>
+          </div>
+
+          {/* Rechte Box */}
+          <div className="flex flex-col items-center justify-center w-full lg:w-1/2">
+            {/* Inhalt der rechten Box */}
+          </div>
+        </div>
       </AstronomyProvider>
     </main>
   );
+}
+function IssMapWrapper() {
+  const { data, orbitPath } = useContext(IssContext);
+  return <IssMap data={data} orbitPath={orbitPath} />;
 }
