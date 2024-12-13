@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState, createContext, ReactNode } from "react";
 import { calculateOrbit } from "../../../utils/orbit";
 
@@ -54,6 +55,7 @@ const IssDataProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const updateOrbitPath = async () => {
+      console.log("Updating orbit path...");
       // Statische TLE-Daten
       const tleLines = [
         "1 25544U 98067A   24345.54333896  .00017806  00000+0  31407-3 0  9998",
@@ -67,6 +69,7 @@ const IssDataProvider = ({ children }: { children: ReactNode }) => {
 
       const fixedOrbitPath = fixOrbitPath(formattedOrbitPath);
       setOrbitPath(fixedOrbitPath);
+      console.log("Orbit path updated:", fixedOrbitPath);
     };
 
     updateOrbitPath();
@@ -75,15 +78,20 @@ const IssDataProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("Fetching ISS data...");
         const response = await fetch("/api/iss");
+        console.log("API response status:", response.status);
         if (!response.ok) {
           throw new Error("Failed to fetch ISS data");
         }
         const rawData = await response.json();
+        console.log("Fetched raw data:", rawData);
         setData(rawData);
         setError(null);
-      } catch {
+        console.log("ISS data set:", rawData);
+      } catch (error) {
         setError("Fehler beim Abrufen der ISS-Daten.");
+        console.error("Error fetching ISS data:", error);
       }
     };
 
@@ -91,6 +99,11 @@ const IssDataProvider = ({ children }: { children: ReactNode }) => {
     const interval = setInterval(fetchData, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    console.log("Current ISS data:", data);
+    console.log("Current orbit path:", orbitPath);
+  }, [data, orbitPath]);
 
   return (
     <IssContext.Provider value={{ data, orbitPath, error }}>

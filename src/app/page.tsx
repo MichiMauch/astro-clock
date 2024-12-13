@@ -14,6 +14,10 @@ const IssMap = dynamic(() => import("./iss/_components/issMap"), {
   ssr: false,
 });
 
+const MapboxMap = dynamic(() => import("./iss/_components/mapboxMap"), {
+  ssr: false,
+});
+
 export default function Home() {
   return (
     <main className="flex flex-col justify-center items-center relative px-4 py-4">
@@ -61,8 +65,10 @@ export default function Home() {
           </div>
 
           {/* Rechte Box */}
-          <div className="flex flex-col items-center justify-center w-full lg:w-1/2">
-            {/* Inhalt der rechten Box */}
+          <div className="flex flex-col items-center justify-center w-full lg:w-1/2 h-[500px] lg:h-[400px] md:h-[300px] sm:h-[200px]">
+            <IssDataProvider>
+              <MapboxMapWrapper />
+            </IssDataProvider>
           </div>
         </div>
       </AstronomyProvider>
@@ -73,4 +79,9 @@ export default function Home() {
 function IssMapWrapper() {
   const { data, orbitPath } = useContext(IssContext);
   return <IssMap data={data} orbitPath={orbitPath} />;
+}
+
+function MapboxMapWrapper() {
+  const { data, orbitPath } = useContext(IssContext);
+  return <MapboxMap data={data} orbitPath={orbitPath} />;
 }
