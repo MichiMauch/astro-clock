@@ -1,8 +1,10 @@
 "use client";
 
-import IssMap from "./_components/issMap";
+import dynamic from "next/dynamic";
 import IssDataProvider, { IssContext } from "./_components/issDataProvider";
 import { useContext } from "react";
+
+const IssMap = dynamic(() => import("./_components/issMap"), { ssr: false });
 
 export default function HomePage() {
   return (

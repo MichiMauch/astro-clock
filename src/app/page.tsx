@@ -6,9 +6,13 @@ import MoonCard from "./cards/_components/MoonCard";
 import EarthCard from "./cards/_components/EarthCard";
 import ApodImage from "./imageoftheday/box1/imageoftheday";
 import EarthImageGallery from "./epic/box1/EarthImageWidget";
-import IssMap from "./iss/_components/issMap";
+import dynamic from "next/dynamic";
 import IssDataProvider, { IssContext } from "./iss/_components/issDataProvider";
 import { useContext } from "react";
+
+const IssMap = dynamic(() => import("./iss/_components/issMap"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
@@ -65,6 +69,7 @@ export default function Home() {
     </main>
   );
 }
+
 function IssMapWrapper() {
   const { data, orbitPath } = useContext(IssContext);
   return <IssMap data={data} orbitPath={orbitPath} />;
