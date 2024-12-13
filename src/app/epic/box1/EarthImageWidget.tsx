@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
 import useEarthImage from "../_components/useEarthImage"; // Importiere den neuen Hook
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const EarthImageWidget: React.FC = () => {
   const {
@@ -45,11 +47,14 @@ const EarthImageWidget: React.FC = () => {
           </p>
         </div>
         <div className="flex items-center">
-          <input
-            type="text"
-            placeholder="tt.mm.jjjj"
-            value={inputDate}
-            onChange={(e) => setInputDate(e.target.value)}
+          <DatePicker
+            selected={new Date(inputDate)}
+            onChange={(date: Date | null) => {
+              if (date) {
+                setInputDate(date.toISOString().split("T")[0]);
+              }
+            }}
+            dateFormat="dd.MM.yyyy"
             className="border border-gray-300 p-2 rounded w-60 text-center shadow-sm focus:ring focus:ring-blue-300"
           />
           <button

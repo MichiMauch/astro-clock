@@ -8,13 +8,10 @@ const useEarthImage = () => {
   const getYesterdayDate = () => {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const day = String(yesterday.getDate()).padStart(2, '0');
-    const month = String(yesterday.getMonth() + 1).padStart(2, '0');
-    const year = yesterday.getFullYear();
-    return `${day}.${month}.${year}`;
+    return yesterday.toISOString().split('T')[0]; // ISO-Format jjjj-mm-tt
   };
 
-  const [inputDate, setInputDate] = useState<string>(getYesterdayDate()); // Eingabedatum im Format tt.mm.jjjj
+  const [inputDate, setInputDate] = useState<string>(getYesterdayDate());
   const [currentIndex, setCurrentIndex] = useState<number>(0); // Aktueller Index für die Animation
   const [imagesPreloaded, setImagesPreloaded] = useState<boolean>(false); // Status für vorgeladene Bilder
 
@@ -58,13 +55,7 @@ const useEarthImage = () => {
 
   // Datum validieren und Bilder abrufen
   const handleFetchImages = () => {
-    const dateParts = inputDate.split(".");
-    if (dateParts.length === 3) {
-      const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`; // Format zu jjjj-mm-tt konvertieren
-      fetchImagesByDate(formattedDate);
-    } else {
-      setError("Invalid date format. Please use tt.mm.jjjj.");
-    }
+    fetchImagesByDate(inputDate);
   };
 
   // Bilder vorladen
