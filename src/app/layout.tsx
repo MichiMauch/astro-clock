@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import "./globals.css";
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
@@ -42,8 +42,10 @@ export default function RootLayout({
 
       uniforms = {
         iTime: { value: 0.0 },
-        iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-        iMouse: { value: new THREE.Vector2(0, 0) }
+        iResolution: {
+          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+        },
+        iMouse: { value: new THREE.Vector2(0, 0) },
       };
 
       const vertexShader = `
@@ -127,7 +129,7 @@ export default function RootLayout({
       const material = new THREE.ShaderMaterial({
         uniforms: uniforms,
         vertexShader: vertexShader,
-        fragmentShader: fragmentShader
+        fragmentShader: fragmentShader,
       });
 
       const plane = new THREE.PlaneGeometry(2, 2);
@@ -138,7 +140,7 @@ export default function RootLayout({
     }
 
     function animate() {
-      uniforms.iTime.value += 0.01;  // Reduce the increment to slow down the animation
+      uniforms.iTime.value += 0.01; // Reduce the increment to slow down the animation
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     }
@@ -154,14 +156,14 @@ export default function RootLayout({
       uniforms.iMouse.value.y = event.clientY;
     }
 
-    window.addEventListener('resize', onWindowResize, false);
-    window.addEventListener('mousemove', onMouseMove, false);
+    window.addEventListener("resize", onWindowResize, false);
+    window.addEventListener("mousemove", onMouseMove, false);
 
     init();
 
     return () => {
-      window.removeEventListener('resize', onWindowResize);
-      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener("resize", onWindowResize);
+      window.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
 
@@ -171,8 +173,11 @@ export default function RootLayout({
         <title>Astro Clock</title>
         <meta name="description" content="Eine Astronomische Uhr mit Next.js" />
       </head>
-      <body className="bg-gray-100 min-h-screen">
-        <div ref={containerRef} className="fixed top-0 left-0 w-full h-full"></div>
+      <body className="bg-gray-100 min-h-screen relative">
+        <div
+          ref={containerRef}
+          className="fixed top-0 left-0 w-full h-full pointer-events-none"
+        ></div>
         {children}
       </body>
     </html>

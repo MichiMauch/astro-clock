@@ -9,10 +9,10 @@ const ApodImage = () => {
   }
 
   const [imageData, setImageData] = useState<ApodData | null>(null);
-  const [translatedText, setTranslatedText] = useState<string | null>(null);
   const [showTranslation, setShowTranslation] = useState(false);
-  const [translatedTitle, setTranslatedTitle] = useState<string | null>(null);
+  const [translatedTitle] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [translatedText] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchApodImage = async () => {
@@ -29,6 +29,8 @@ const ApodImage = () => {
         // Logge die erhaltenen APOD-Daten
         console.log("APOD data fetched:", data);
 
+        // Deaktiviere die automatische Übersetzung
+        /*
         if (data.explanation) {
           // 2. Übersetzung und Speicherung der Beschreibung
           const translationRequestBody = {
@@ -63,8 +65,8 @@ const ApodImage = () => {
           console.log("Translated Title Response:", translatedTitle);
 
           setTranslatedText(translatedText);
-          setTranslatedTitle(translatedTitle);
         }
+        */
       } catch (error) {
         // Logge Fehler
         console.error("Error fetching APOD or translating:", error);
@@ -123,12 +125,14 @@ const ApodImage = () => {
         ) : (
           <div>
             <p>{imageData.explanation}</p>
+            {/*
             <button
               className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
               onClick={() => setShowTranslation(true)}
             >
               Show Translation
             </button>
+            */}
           </div>
         )}
       </div>

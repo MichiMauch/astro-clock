@@ -3,12 +3,29 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || "";
+import { FiCrosshair } from "react-icons/fi";
+import { createRoot } from "react-dom/client";
 
 interface MapboxMapProps {
   data: { latitude: number; longitude: number } | null;
   orbitPath: [number, number][];
+}
+
+async function fetchMapboxToken() {
+  try {
+    const response = await fetch("/api/mapbox");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (!data.token) {
+      throw new Error("Token not found in response");
+    }
+    return data.token;
+  } catch (error) {
+    console.error("Failed to fetch Mapbox token:", error);
+    throw error;
+  }
 }
 
 function splitOrbitPath(path: [number, number][]): [number, number][][] {
@@ -34,42 +51,47 @@ export default function MapboxMap({ data, orbitPath }: MapboxMapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const markerRef = useRef<mapboxgl.Marker | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const initializeMap = () => {
+    const initializeMap = async () => {
       if (mapContainerRef.current && !mapRef.current) {
         console.log("Initializing map...");
-        const map = new mapboxgl.Map({
-          container: mapContainerRef.current,
-          style: "mapbox://styles/mapbox/streets-v11",
-          center: [0, 0],
-          zoom: 1.5,
-          maxBounds: [
-            [-180, -90],
-            [180, 90],
-          ],
-        });
 
-        mapRef.current = map;
+        try {
+          const token = await fetchMapboxToken();
+          mapboxgl.accessToken = token;
 
-        map.on("load", () => {
-          console.log("Map loaded successfully!");
-          setMapLoaded(true);
-          map.fitBounds([
-            [-180, -90],
-            [180, 90],
-          ]);
-        });
+          const map = new mapboxgl.Map({
+            container: mapContainerRef.current,
+            style: "mapbox://styles/mapbox/streets-v11",
+            center: [0, 0],
+            zoom: 1.5,
+            maxBounds: [
+              [-180, -90],
+              [180, 90],
+            ],
+          });
 
-        map.on("error", (e) => {
-          console.error("Mapbox error:", e.error);
-        });
+          mapRef.current = map;
 
-        return () => {
-          map.remove();
-        };
+          map.on("load", () => {
+            console.log("Map loaded successfully!");
+            setMapLoaded(true);
+            map.fitBounds([
+              [-180, -90],
+              [180, 90],
+            ]);
+          });
+
+          map.on("error", (e) => {
+            console.error("Mapbox error:", e.error);
+          });
+        } catch (error) {
+          console.error("Failed to initialize map:", error);
+        }
       }
     };
 
@@ -102,34 +124,19 @@ export default function MapboxMap({ data, orbitPath }: MapboxMapProps) {
       const { latitude, longitude } = data;
 
       // Remove existing marker if any
-      const existingMarker = mapRef.current.getLayer("iss-marker");
-      if (existingMarker) {
-        mapRef.current.removeLayer("iss-marker");
-        mapRef.current.removeSource("iss-marker");
+      if (markerRef.current) {
+        markerRef.current.remove();
       }
 
       // Add new marker
-      mapRef.current.addSource("iss-marker", {
-        type: "geojson",
-        data: {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [longitude, latitude],
-          },
-          properties: {},
-        },
-      });
+      const el = document.createElement("div");
+      el.className = "iss-marker";
+      const root = createRoot(el);
+      root.render(<FiCrosshair size={24} color="#FF0000" />);
 
-      mapRef.current.addLayer({
-        id: "iss-marker",
-        type: "circle",
-        source: "iss-marker",
-        paint: {
-          "circle-radius": 10,
-          "circle-color": "#FF0000",
-        },
-      });
+      markerRef.current = new mapboxgl.Marker(el)
+        .setLngLat([longitude, latitude])
+        .addTo(mapRef.current);
     }
   }, [data, mapLoaded]);
 
@@ -179,11 +186,14 @@ export default function MapboxMap({ data, orbitPath }: MapboxMapProps) {
   return (
     <div
       ref={mapContainerRef}
-      className="w-full h-[500px] relative overflow-hidden"
+      className="w-full h-[500px] relative overflow-hidden rounded-lg"
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        width: "100%",
+        height: "100%",
+        borderRadius: "0.5rem",
       }}
     >
       {!mapLoaded && <div>Loading map...</div>}

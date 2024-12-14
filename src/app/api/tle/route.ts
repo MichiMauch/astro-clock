@@ -30,15 +30,15 @@ export async function GET(request: Request) {
 
     console.log("Gefilterte TLE-Zeilen:", tleLines);
 
-    // Überprüfe, ob mindestens 2 Zeilen vorhanden sind
-    if (tleLines.length < 2) {
-      throw new Error("Ungültige TLE-Daten: Weniger als 2 Zeilen vorhanden.");
+    // Überprüfe, ob mindestens 3 Zeilen vorhanden sind
+    if (tleLines.length < 3) {
+      throw new Error("Ungültige TLE-Daten: Weniger als 3 Zeilen vorhanden.");
     }
 
-    // Rückgabe der ersten beiden Zeilen
+    // Rückgabe der zweiten und dritten Zeilen
     return NextResponse.json({
-      line1: tleLines[0],
-      line2: tleLines[1],
+      line1: tleLines[1],
+      line2: tleLines[2],
     });
   } catch (error) {
     console.error("Fehler beim Abrufen der TLE-Daten:", error);

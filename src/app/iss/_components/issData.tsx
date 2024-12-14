@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  FaGlobeAmericas,
+  FaRulerVertical,
+  FaTachometerAlt,
+} from "react-icons/fa";
 
 interface IssData {
   name: string;
@@ -18,7 +23,7 @@ interface IssData {
   units: string;
 }
 
-export default function IssData() {
+export default function IssData({ className }: { className?: string }) {
   const [data, setData] = useState<IssData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,29 +48,65 @@ export default function IssData() {
     fetchData();
 
     // Aktualisiere die Daten alle 3 Sekunden
-    const interval = setInterval(fetchData, 1000);
+    const interval = setInterval(fetchData, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="min-h-screen bg-black font-white flex items-center justify-center z-50">
-      <div className="bg-white shadow-md rounded p-6 max-w-md text-center">
-        <h1 className="text-xl font-bold mb-4">ISS Daten</h1>
-        {error && <p className="text-red-500">{error}</p>}
-        {data ? (
-          <div>
-            <ul className="text-left">
-              {Object.entries(data).map(([key, value]) => (
-                <li key={key}>
-                  <strong>{key}:</strong> {value}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
+    <div
+      className={`flex flex-col justify-center items-center bg-black rounded-lg p-8 gap-8 ${className} lg:h-full`}
+    >
+      <div className="text-center text-gray-300">
+        <h2 className="text-2xl font-bold mb-4 font-dmmono underline decoration-dotted">
+          Internationale Raumstation (ISS)
+        </h2>
+        <p>
+          Die ISS ist ein bemanntes Forschungslabor im Erdorbit und das grösste
+          künstliche Objekt im Weltraum.
+        </p>
       </div>
+      {error && <p className="text-red-500">{error}</p>}
+      {data ? (
+        <div className="text-center text-gray-300">
+          <h3 className="text-2xl font-bold mb-4 font-dmmono underline decoration-dotted">
+            Aktuelle Position der ISS
+          </h3>
+          <ul className="space-y-2">
+            <li>
+              <FaGlobeAmericas className="inline-block mr-2" />
+              <span className="font-dmmono text-xl">
+                {data.latitude.toFixed(3)}°
+              </span>
+            </li>
+            <li>
+              <FaGlobeAmericas className="inline-block mr-2" />
+              <span className="font-dmmono text-xl">
+                {data.longitude.toFixed(3)}°
+              </span>
+            </li>
+            <li>
+              <FaRulerVertical className="inline-block mr-2" />
+              <span className="font-dmmono text-xl">
+                {Math.round(data.altitude)} km
+              </span>
+            </li>
+            <li>
+              <FaTachometerAlt className="inline-block mr-2" />
+              <span className="font-dmmono text-xl">
+                {Math.round(data.velocity)} km/h
+              </span>
+            </li>
+          </ul>
+          <p className="mt-4">
+            Die ISS umkreist die Erde in etwa 90 - 93 Minuten und bietet
+            einzigartige Möglichkeiten für wissenschaftliche Forschung in der
+            Schwerelosigkeit. Sie ist ein Symbol für internationale
+            Zusammenarbeit in der Raumfahrt.
+          </p>
+        </div>
+      ) : (
+        <p className="text-gray-300">Loading...</p>
+      )}
     </div>
   );
 }

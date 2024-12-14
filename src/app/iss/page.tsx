@@ -1,20 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import IssDataProvider, { IssContext } from "./_components/issDataProvider";
 import { useContext, useEffect, useState } from "react";
-
-// Dynamisches Laden von IssMap
-const IssMap = dynamic(() => import("./_components/issMap"), { ssr: false });
-// Dynamisches Laden von MapboxMap
-const MapboxMap = dynamic(() => import("./_components/mapboxMap"), {
-  ssr: false,
-});
 
 export default function HomePage() {
   return (
     <IssDataProvider>
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center z-50">
+      <div className="relative z-10 min-h-screen bg-white text-black flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Startseite</h1>
         <p className="mb-6">Hier kannst du die ISS-Daten sehen:</p>
         <IssMapWrapper />
@@ -42,16 +34,17 @@ function IssMapWrapper() {
     return <p>Loading ISS data...</p>;
   }
 
+  if (!data) {
+    return <p>Error: ISS data not available.</p>;
+  }
+
   return (
-    <div className="w-full flex flex-col items-center z-50">
-      {/* Leaflet-Karte */}
-      <div className="w-full h-[500px] mb-6">
-        <IssMap data={data} orbitPath={orbitPath} />
-      </div>
-      {/* Mapbox-Karte */}
-      <div className="w-full h-[500px] z-100">
-        <MapboxMap data={data} orbitPath={orbitPath} />
-      </div>
+    <div>
+      <h2>ISS Position:</h2>
+      <p>Latitude: {data.latitude}</p>
+      <p>Longitude: {data.longitude}</p>
+      <p>Altitude: {data.altitude}</p>
+      <p>Velocity: {data.velocity}</p>
     </div>
   );
 }
