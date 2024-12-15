@@ -66,7 +66,7 @@ export default function MapboxMap({ data, orbitPath }: MapboxMapProps) {
 
           const map = new mapboxgl.Map({
             container: mapContainerRef.current,
-            style: "mapbox://styles/mapbox/streets-v11",
+            style: "mapbox://styles/mapbox/standard-satellite",
             center: [0, 0],
             zoom: 1.5,
             maxBounds: [
@@ -137,6 +137,12 @@ export default function MapboxMap({ data, orbitPath }: MapboxMapProps) {
       markerRef.current = new mapboxgl.Marker(el)
         .setLngLat([longitude, latitude])
         .addTo(mapRef.current);
+
+      // Center the map on the ISS position
+      mapRef.current.flyTo({
+        center: [longitude, latitude],
+        essential: true, // This ensures the animation is considered essential with respect to prefers-reduced-motion
+      });
     }
   }, [data, mapLoaded]);
 

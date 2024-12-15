@@ -21,6 +21,39 @@ export const IssContext = createContext<IssContextProps>({
   error: null,
 });
 
+const CACHE_KEY = "tleData";
+const CACHE_EXPIRATION = 24 * 60 * 60 * 1000; // 24 Stunden in Millisekunden
+
+const fetchTleData = async () => {
+  const response = await fetch("/api/tle?satelliteNumber=25544");
+  if (!response.ok) {
+    throw new Error("Failed to fetch TLE data");
+  }
+  const data = await response.json();
+  return [data.line1, data.line2];
+};
+
+const getCachedTleData = () => {
+  const cachedData = localStorage.getItem(CACHE_KEY);
+  if (!cachedData) return null;
+
+  const { timestamp, tleLines } = JSON.parse(cachedData);
+  if (Date.now() - timestamp > CACHE_EXPIRATION) {
+    localStorage.removeItem(CACHE_KEY);
+    return null;
+  }
+
+  return tleLines;
+};
+
+const cacheTleData = (tleLines: string[]) => {
+  const cachedData = {
+    timestamp: Date.now(),
+    tleLines,
+  };
+  localStorage.setItem(CACHE_KEY, JSON.stringify(cachedData));
+};
+
 const IssDataProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<IssData | null>(null);
   const [orbitPath, setOrbitPath] = useState<[number, number][]>([]);
@@ -56,11 +89,18 @@ const IssDataProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const updateOrbitPath = async () => {
       console.log("Updating orbit path...");
-      // Statische TLE-Daten
-      const tleLines = [
-        "1 25544U 98067A   24345.54333896  .00017806  00000+0  31407-3 0  9998",
-        "2 25544  51.6364 161.6568 0007197 324.6090  35.4420 15.50446230485902",
-      ];
+
+      let tleLines = getCachedTleData();
+      if (!tleLines) {
+        try {
+          tleLines = await fetchTleData();
+          cacheTleData(tleLines);
+        } catch (error) {
+          setError("Fehler beim Abrufen der TLE-Daten.");
+          console.error("Error fetching TLE data:", error);
+          return;
+        }
+      }
 
       const orbit = calculateOrbit(tleLines);
       const formattedOrbitPath: [number, number][] = orbit.map(
