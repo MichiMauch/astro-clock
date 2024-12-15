@@ -58,18 +58,18 @@ export default function IssData({ className }: { className?: string }) {
     >
       <div className="text-center text-gray-300">
         <h2 className="text-2xl font-bold mb-4 font-dmmono underline decoration-dotted">
-          Internationale Raumstation (ISS)
+          Internationale Space Station (ISS)
         </h2>
         <p>
-          Die ISS ist ein bemanntes Forschungslabor im Erdorbit und das grösste
-          künstliche Objekt im Weltraum.
+          The ISS is a manned research laboratory in Earth&apos;s orbit and the
+          largest artificial object in space.
         </p>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       {data ? (
         <div className="text-center text-gray-300">
           <h3 className="text-2xl font-bold mb-4 font-dmmono underline decoration-dotted">
-            Aktuelle Position der ISS
+            Current Position of the ISS
           </h3>
           <ul className="space-y-2">
             <li>
@@ -98,10 +98,9 @@ export default function IssData({ className }: { className?: string }) {
             </li>
           </ul>
           <p className="mt-4">
-            Die ISS umkreist die Erde in etwa 90 - 93 Minuten und bietet
-            einzigartige Möglichkeiten für wissenschaftliche Forschung in der
-            Schwerelosigkeit. Sie ist ein Symbol für internationale
-            Zusammenarbeit in der Raumfahrt.
+            The ISS orbits the Earth in approximately 90 - 93 minutes and offers
+            unique opportunities for scientific research in microgravity. It is
+            a symbol of international cooperation in space exploration.
           </p>
         </div>
       ) : (
