@@ -196,7 +196,7 @@ export default function MapboxMap({ data, orbitPath }: MapboxMapProps) {
         borderRadius: "0.5rem",
       }}
     >
-      {!mapLoaded && <div>Loading map...</div>}
+      {!mapLoaded && <div>Loading map......</div>}
     </div>
   );
 }
